@@ -10,8 +10,8 @@ templ Base() {
 		</head>
 		<body>
 			<nav>
-				<a href="/">Home</a>
-				<a href="/roster">Roster</a>
+				<a hx-get="/" hx-target="body" hx-swap="transition:true" hx-push-url="true">Home</a>
+				<a hx-get="/roster" hx-target=".container" hx-swap="transition:true" hx-push-url="true">Roster</a>
 			</nav>
 			<h1 class="text-center text-3xl font-bold">Roster Keeper</h1>
 			<div class="container flex justify-center mt-10">

@@ -13,5 +13,6 @@ func(h RosterHandler) GetRoster(c echo.Context) error {
     team := model.Team{
         Name: "Team 1",
     }
-    return render(c, roster.Show(team))
+    needBase := c.Request().Header.Get("HX-Request") != "true"
+    return render(c, roster.Show(team, needBase))
 }
