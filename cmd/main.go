@@ -7,18 +7,18 @@ import (
 )
 
 func main() {
-    app := echo.New()
+	app := echo.New()
 
-    homeHandler := handler.HomeHandler{}
-    app.GET("/", homeHandler.HandlerHomeShow)
+	homeHandler := handler.HomeHandler{}
+	app.GET("/", homeHandler.HandlerHomeShow).Name = "home"
 
-    rosterHandler := handler.RosterHandler{}
-    app.GET("/roster", rosterHandler.GetRoster)
+	rosterHandler := handler.RosterHandler{}
+	app.GET("/roster", rosterHandler.GetRoster).Name = "roster"
 
-    newMemberHandler := handler.NewMemberHandler{}
-    app.GET("/new-player", newMemberHandler.GetNewTeamMember)
+	newMemberHandler := handler.NewMemberHandler{}
+	app.GET("/new-player", newMemberHandler.GetNewTeamMember).Name = "new-player"
 
-    app.Static("/static", "public")
+	app.Static("/static", "public").Name = "static"
 
-    app.Start(":8080")
+	app.Start(":8080")
 }
