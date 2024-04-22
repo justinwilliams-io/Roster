@@ -13,5 +13,6 @@ func(h HomeHandler) HandlerHomeShow(c echo.Context) error {
     u := model.User{
         Email: "justin@example.com",
     }
-    return render(c, home.Show(u))
+    needBase := c.Request().Header.Get("HX-Request") != "true"
+    return render(c, home.Show(u, needBase))
 }

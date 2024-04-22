@@ -1,22 +1,21 @@
 package layout 
 
+import "rosterize/view/components"
+
 templ Base() {
 	<html>
 		<head>
 			<title>Roster Keeper</title>
 			<script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
 			<link rel="stylesheet" href="/static/css/tailwind.css"/>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 		</head>
 		<body>
-			<nav>
-				<a hx-get="/" hx-target="body" hx-swap="transition:true" hx-push-url="true">Home</a>
-				<a hx-get="/roster" hx-target=".container" hx-swap="transition:true" hx-push-url="true">Roster</a>
-			</nav>
+            @components.Navbar()
 			<h1 class="text-center text-3xl font-bold">Roster Keeper</h1>
-			<div class="container flex justify-center mt-10">
+			<main class="container flex justify-center mt-10">
 				{ children... }
-			</div>
+			</main>
 		</body>
 	</html>
 }

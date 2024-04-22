@@ -1,10 +1,20 @@
 package home 
 
 import (
-    "rosterize/model"
-    "rosterize/view/layout"
+	"rosterize/model"
+	"rosterize/view/layout"
 )
 
-templ Show(user model.User) {
-	@layout.Base()
+templ home() {
+}
+
+templ Show(user model.User, withBase bool) {
+	if withBase {
+		@layout.Base() {
+			@home()
+		}
+	}
+    else {
+        @home()
+    }
 }
