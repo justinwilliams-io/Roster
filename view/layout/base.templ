@@ -7,13 +7,12 @@ templ Base() {
 		<head>
 			<title>Roster Keeper</title>
 			<script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 			<link rel="stylesheet" href="/static/css/tailwind.css"/>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 		</head>
 		<body>
             @components.Navbar()
-			<h1 class="text-center text-3xl font-bold">Roster Keeper</h1>
-			<main class="container flex justify-center mt-10">
+			<main class="container mt-10">
 				{ children... }
 			</main>
 		</body>

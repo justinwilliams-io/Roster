@@ -1,14 +1,13 @@
 package home 
 
 import (
-	"rosterize/model"
 	"rosterize/view/layout"
 )
 
 templ home() {
 }
 
-templ Show(user model.User, withBase bool) {
+templ Show(withBase bool) {
 	if withBase {
 		@layout.Base() {
 			@home()
