@@ -1,0 +1,21 @@
+package roster
+
+import "rosterize/model"
+import "strconv"
+
+templ ShowPlayer(player model.Player) {
+	<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+		<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+			{ player.FirstName }
+		</th>
+		<td class="px-6 py-4">
+			{ player.LastName }
+		</td>
+		<td class="px-6 py-4">
+			{ strconv.Itoa(player.JerseyNumber) }
+		</td>
+		<td class="px-6 py-4">
+			{ player.JerseySize }
+		</td>
+	</tr>
+}

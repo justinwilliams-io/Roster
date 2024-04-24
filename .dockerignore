@@ -1,0 +1,7 @@
+# flyctl launch added from .gitignore
+public
+node_modules
+tmp
+**/*templ.go
+**/package-lock.json
+fly.toml

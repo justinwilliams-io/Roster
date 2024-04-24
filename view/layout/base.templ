@@ -1,20 +1,28 @@
 package layout 
 
 import "rosterize/view/components"
+import "time"
+import "strconv"
 
 templ Base() {
 	<html>
 		<head>
 			<title>Roster Keeper</title>
 			<script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+			<script src="/static/js/index.js" defer></script>
 			<link rel="stylesheet" href="/static/css/tailwind.css"/>
 		</head>
 		<body>
-            @components.Navbar()
-			<main class="container mt-10">
+			@components.Navbar()
+			<main class="container mt-10 mb-20 px-5">
 				{ children... }
 			</main>
 		</body>
+		<footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600">
+			<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+				© { strconv.Itoa(time.Now().Year()) }
+			</span>
+		</footer>
 	</html>
 }

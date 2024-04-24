@@ -7,9 +7,31 @@ import (
 
 templ rosterpage(team model.Team) {
 	<h1 class="text-center text-3xl font-bold">{ team.Name } Roster</h1>
-	<div class="roster-container mt-10"></div>
 	<div class="form-container mt-10">
 		@form()
+	</div>
+	<div class="mt-10">
+		<div class="relative overflow-x-auto roster-table hidden">
+			<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+				<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+					<tr>
+						<th scope="col" class="px-6 py-3">
+                            First Name
+						</th>
+						<th scope="col" class="px-6 py-3">
+							Last Name
+						</th>
+						<th scope="col" class="px-6 py-3">
+							Jersey Number
+						</th>
+						<th scope="col" class="px-6 py-3">
+							Jersey Size
+						</th>
+					</tr>
+				</thead>
+				<tbody class="roster-container"></tbody>
+			</table>
+		</div>
 	</div>
 }
 

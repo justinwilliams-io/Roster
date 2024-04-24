@@ -1,4 +1,5 @@
 run:
+	@clear
 	@templ generate
 	@npm run dev 
 	@go run cmd/main.go
