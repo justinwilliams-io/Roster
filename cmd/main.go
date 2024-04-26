@@ -18,6 +18,9 @@ func main() {
 	newMemberHandler := handler.NewPlayerHandler{}
 	app.POST("/add-player", newMemberHandler.GetNewPlayer).Name = "add-player"
 
+    getTeamCsvHandler := handler.GetTeamCsvHandler{}
+    app.POST("/get-team-csv", getTeamCsvHandler.GetCsv).Name = "get-team-csv"
+
 	app.Static("/static", "public").Name = "static"
 
 	app.Start(":8080")

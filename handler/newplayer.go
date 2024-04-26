@@ -23,7 +23,7 @@ func (h NewPlayerHandler) GetNewPlayer(c echo.Context) error {
 		JerseySize:   c.Request().FormValue("jersey_size"),
 	}
     
-    c.Response().Header().Add("HX-Trigger", "showRoster")
+    c.Response().Header().Add("HX-Trigger-After-Swap", "showRoster")
 
 	return render(c, roster.ShowPlayer(player))
 }

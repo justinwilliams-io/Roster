@@ -2,10 +2,14 @@ module rosterize
 
 go 1.22.2
 
-require github.com/labstack/echo/v4 v4.12.0
+require (
+	github.com/a-h/templ v0.2.663
+	github.com/labstack/echo/v4 v4.12.0
+)
 
 require (
-	github.com/a-h/templ v0.2.663 // indirect
+	github.com/dnlo/struct2csv v0.0.0-20190928115744-2f584471b24e // indirect
+	github.com/iancoleman/strcase v0.3.0 // indirect
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect

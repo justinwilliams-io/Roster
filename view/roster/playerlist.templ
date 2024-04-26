@@ -5,17 +5,21 @@ import "strconv"
 
 templ ShowPlayer(player model.Player) {
 	<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-		<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+		<td class="px-6 py-4">
 			{ player.FirstName }
-		</th>
+            <input class="hidden" name="first_name[]" value={ player.FirstName } />
+		</td>
 		<td class="px-6 py-4">
 			{ player.LastName }
+            <input class="hidden" name="last_name[]" value={ player.LastName } />
 		</td>
 		<td class="px-6 py-4">
 			{ strconv.Itoa(player.JerseyNumber) }
+            <input class="hidden" name="jersey_number[]" value={ strconv.Itoa(player.JerseyNumber) } />
 		</td>
 		<td class="px-6 py-4">
 			{ player.JerseySize }
+            <input class="hidden" name="jersey_size[]" value={ player.JerseySize } />
 		</td>
 	</tr>
 }
