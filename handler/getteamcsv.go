@@ -2,6 +2,8 @@ package handler
 
 import (
 	"encoding/csv"
+	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"rosterize/model"
@@ -9,48 +11,78 @@ import (
 	"strconv"
 
 	"github.com/dnlo/struct2csv"
+	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
 
 type GetTeamCsvHandler struct{}
 
+type DownloadJsonData struct {
+	Id       uuid.UUID
+	TeamName string
+}
+
 func (h GetTeamCsvHandler) GetCsv(c echo.Context) error {
 	c.Request().ParseForm()
 	form := c.Request().Form
 
-    players := mapPlayers(form)
-    
-    file, err := os.Create("test.csv")
-    if err != nil {
-        log.Fatal(err)
-    }
+	team := mapTeam(form)
 
-    defer file.Close()
+	id := uuid.New()
 
-    writer := csv.NewWriter(file)
-    defer writer.Flush()
+	createfile(id, team)
 
-    encoder := struct2csv.New()
-    rows, _ := encoder.Marshal(players)
+	data := struct {
+		DownloadCsv DownloadJsonData `json:"downloadCsv"`
+	}{}
+	data.DownloadCsv.Id = id
+	data.DownloadCsv.TeamName = team.Name
 
-    writer.WriteAll(rows)
+	jsonData, _ := json.Marshal(data)
+
+	c.Response().Header().Add("HX-Trigger", string(jsonData))
 
 	return render(c, roster.Blank())
 }
 
-func mapPlayers(formData map[string][]string) []model.Player {
-    var players []model.Player
+func mapTeam(formData map[string][]string) model.Team {
+	var team model.Team
+	var players []model.Player
 
-    for i, firstName := range formData["first_name[]"] {
-        jerseyNumber, _ := strconv.Atoi(formData["jersey_number[]"][i])
+	team.Name = formData["team_name"][0]
 
-        players = append(players, model.Player{
-            FirstName: string(firstName),
-            LastName: formData["last_name[]"][i],
-            JerseySize: formData["jersey_size[]"][i],
-            JerseyNumber: jerseyNumber,
-        })   
-    }
+	for i, firstName := range formData["first_name[]"] {
+		jerseyNumber, _ := strconv.Atoi(formData["jersey_number[]"][i])
 
-    return players
+		players = append(players, model.Player{
+			FirstName:    string(firstName),
+			LastName:     formData["last_name[]"][i],
+			JerseySize:   formData["jersey_size[]"][i],
+			JerseyNumber: jerseyNumber,
+		})
+	}
+
+	team.Roster = players
+
+	return team
+}
+
+func createfile(id uuid.UUID, team model.Team) {
+	file, err := os.Create(team.Name + "-" + id.String() + ".csv")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	encoder := struct2csv.New()
+	rows, err := encoder.Marshal(team.Roster)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	writer.WriteAll(rows)
 }

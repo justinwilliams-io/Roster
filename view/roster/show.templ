@@ -12,6 +12,7 @@ templ rosterpage(team model.Team) {
 	</div>
 	<div class="mt-10">
 		<div class="relative overflow-x-auto roster-table hidden">
+            <input class="hidden" name="team_name" value={ team.Name } />
 			<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 				<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 					<tr>
@@ -28,7 +29,7 @@ templ rosterpage(team model.Team) {
 							Jersey Size
 						</th>
 						<th scope="col" class="px-6 py-3">
-							<button hx-post="/get-team-csv" hx-swap="none" hx-include=".roster-container input">Get as CSV</button>
+							<button hx-post="/get-team-csv" hx-swap="none" hx-include=".roster-table input">Get as CSV</button>
 						</th>
 					</tr>
 				</thead>

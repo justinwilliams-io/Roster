@@ -2,6 +2,7 @@ package main
 
 import (
 	"rosterize/handler"
+	"rosterize/middleware"
 
 	"github.com/labstack/echo/v4"
 )
@@ -18,10 +19,13 @@ func main() {
 	newMemberHandler := handler.NewPlayerHandler{}
 	app.POST("/add-player", newMemberHandler.GetNewPlayer).Name = "add-player"
 
-    getTeamCsvHandler := handler.GetTeamCsvHandler{}
-    app.POST("/get-team-csv", getTeamCsvHandler.GetCsv).Name = "get-team-csv"
+	getTeamCsvHandler := handler.GetTeamCsvHandler{}
+	app.POST("/get-team-csv", getTeamCsvHandler.GetCsv).Name = "get-team-csv"
 
 	app.Static("/static", "public").Name = "static"
+
+	downloadHandler := handler.DownloadFileHandler{}
+	app.GET("/download/:id", middleware.DeleteAfterDownload(downloadHandler.DownloadFile)).Name = "download-csv"
 
 	app.Start(":8080")
 }
