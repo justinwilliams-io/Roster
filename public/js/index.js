@@ -15,6 +15,6 @@ function handleShowEvent() {
  * @returns { void }
  */
 function handleDownloadFile(event) {
-    console.log(event.detail);
-    window.open(`/download/${event.detail.TeamName}-${event.detail.Id}`, '_blank').focus();
+    console.log(event.detail.value);
+    window.open(`/download/${event.detail.value}`, '_blank');
 }

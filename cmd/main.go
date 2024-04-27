@@ -22,10 +22,13 @@ func main() {
 	getTeamCsvHandler := handler.GetTeamCsvHandler{}
 	app.POST("/get-team-csv", getTeamCsvHandler.GetCsv).Name = "get-team-csv"
 
+	createTeamHandler := handler.CreateTeamHandler{}
+	app.POST("/submit-team-name", createTeamHandler.CreateTeam).Name = "create-team"
+
 	app.Static("/static", "public").Name = "static"
 
 	downloadHandler := handler.DownloadFileHandler{}
-	app.GET("/download/:id", middleware.DeleteAfterDownload(downloadHandler.DownloadFile)).Name = "download-csv"
+	app.GET("/download/:fileName", middleware.DeleteAfterDownload(downloadHandler.DownloadFile)).Name = "download-csv"
 
 	app.Start(":8080")
 }

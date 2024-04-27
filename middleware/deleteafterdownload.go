@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"os"
+	"rosterize/util"
 
 	"github.com/labstack/echo/v4"
 )
@@ -9,7 +9,11 @@ import (
 func DeleteAfterDownload(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		defer func(c echo.Context) {
-			os.Remove(c.Param("id") + ".csv")
+            status := c.Response().Status
+
+            if status == 200 {
+                util.DeleteFile(c.Param("fileName"))
+            }
 		}(c)
 
         return next(c)

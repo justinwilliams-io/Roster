@@ -3,12 +3,13 @@ package handler
 import (
 	"encoding/csv"
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"rosterize/model"
+	"rosterize/util"
 	"rosterize/view/roster"
 	"strconv"
+	"time"
 
 	"github.com/dnlo/struct2csv"
 	"github.com/google/uuid"
@@ -30,17 +31,23 @@ func (h GetTeamCsvHandler) GetCsv(c echo.Context) error {
 
 	id := uuid.New()
 
-	createfile(id, team)
+    fileName := createfile(id, team)
 
 	data := struct {
-		DownloadCsv DownloadJsonData `json:"downloadCsv"`
-	}{}
-	data.DownloadCsv.Id = id
-	data.DownloadCsv.TeamName = team.Name
+		DownloadCsv string `json:"downloadCsv"`
+	}{
+        DownloadCsv: fileName, 
+    }
 
 	jsonData, _ := json.Marshal(data)
 
 	c.Response().Header().Add("HX-Trigger", string(jsonData))
+
+    go func(filename string) {
+        time.Sleep(5 * time.Minute)
+        
+        util.DeleteFile(filename)
+    }(fileName)
 
 	return render(c, roster.Blank())
 }
@@ -67,8 +74,9 @@ func mapTeam(formData map[string][]string) model.Team {
 	return team
 }
 
-func createfile(id uuid.UUID, team model.Team) {
-	file, err := os.Create(team.Name + "-" + id.String() + ".csv")
+func createfile(id uuid.UUID, team model.Team) string {
+    fileName := team.Name + "-" + id.String() + ".csv"
+	file, err := os.Create("files/" + fileName)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -81,8 +89,10 @@ func createfile(id uuid.UUID, team model.Team) {
 	encoder := struct2csv.New()
 	rows, err := encoder.Marshal(team.Roster)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 
 	writer.WriteAll(rows)
+
+    return fileName
 }

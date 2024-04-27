@@ -1,0 +1,42 @@
+package roster
+
+templ ShowRosterForm(teamName string) {
+	<div class="roster-page-wrapper">
+		<h1 class="text-center text-3xl font-bold">{ teamName } Roster</h1>
+		<div class="form-container mt-10">
+			@form()
+		</div>
+		<div class="mt-10">
+			<div class="relative overflow-x-auto roster-table hidden">
+				<input class="hidden" name="team_name" value={ teamName }/>
+				<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+					<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+						<tr>
+							<th scope="col" class="px-6 py-3">
+								First Name
+							</th>
+							<th scope="col" class="px-6 py-3">
+								Last Name
+							</th>
+							<th scope="col" class="px-6 py-3">
+								Jersey Number
+							</th>
+							<th scope="col" class="px-6 py-3">
+								Jersey Size
+							</th>
+						</tr>
+					</thead>
+					<tbody class="roster-container"></tbody>
+				</table>
+				<div class="flex mt-4">
+					<button
+						hx-post="/get-team-csv"
+						hx-swap="none"
+						hx-include=".roster-table input"
+						class="text-white ml-auto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+					>Get as CSV</button>
+				</div>
+			</div>
+		</div>
+	</div>
+}
