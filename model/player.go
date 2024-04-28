@@ -1,7 +1,7 @@
 package model
 
 type Player struct {
-	FirstName    string `form:"first_name"`
+	FirstName    string
 	LastName     string
 	JerseyNumber int
 	JerseySize   string

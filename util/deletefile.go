@@ -6,7 +6,7 @@ import (
 )
 
 func DeleteFile(filename string) error {
-    file, err := os.Open("files/" + filename)
+    file, err := os.Open("./files/" + filename)
     if err != nil {
         fmt.Println(err)
         return err
@@ -15,7 +15,7 @@ func DeleteFile(filename string) error {
     fmt.Println("Deleting File")
 
     file.Close()
-    os.Remove("files/" + filename)
+    os.Remove("./files/" + filename)
 
     return nil
 }

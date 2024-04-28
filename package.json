@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tailwindcss build -i ./src/style/input.css -o ./public/css/tailwind.css --minify && rollup --config",
+    "build": "tailwindcss build -i ./src/style/input.css -o ./public/css/tailwind.css --minify",
     "dev": "tailwindcss build -i ./src/style/input.css -o ./public/css/tailwind.css"
   },
   "keywords": [],

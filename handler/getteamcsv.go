@@ -31,23 +31,23 @@ func (h GetTeamCsvHandler) GetCsv(c echo.Context) error {
 
 	id := uuid.New()
 
-    fileName := createfile(id, team)
+	fileName := createfile(id, team)
 
 	data := struct {
 		DownloadCsv string `json:"downloadCsv"`
 	}{
-        DownloadCsv: fileName, 
-    }
+		DownloadCsv: fileName,
+	}
 
 	jsonData, _ := json.Marshal(data)
 
 	c.Response().Header().Add("HX-Trigger", string(jsonData))
 
-    go func(filename string) {
-        time.Sleep(5 * time.Minute)
-        
-        util.DeleteFile(filename)
-    }(fileName)
+	go func(filename string) {
+		time.Sleep(5 * time.Minute)
+
+		util.DeleteFile(filename)
+	}(fileName)
 
 	return render(c, roster.Blank())
 }
@@ -75,8 +75,14 @@ func mapTeam(formData map[string][]string) model.Team {
 }
 
 func createfile(id uuid.UUID, team model.Team) string {
-    fileName := team.Name + "-" + id.String() + ".csv"
-	file, err := os.Create("files/" + fileName)
+	fileName := team.Name + "-" + id.String() + ".csv"
+
+	_, err := os.Stat("./files")
+	if os.IsNotExist(err) {
+		os.MkdirAll("./files", os.ModePerm)
+	}
+
+	file, err := os.Create("./files/" + fileName)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -94,5 +100,5 @@ func createfile(id uuid.UUID, team model.Team) string {
 
 	writer.WriteAll(rows)
 
-    return fileName
+	return fileName
 }

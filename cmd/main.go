@@ -25,10 +25,10 @@ func main() {
 	createTeamHandler := handler.CreateTeamHandler{}
 	app.POST("/submit-team-name", createTeamHandler.CreateTeam).Name = "create-team"
 
-	app.Static("/static", "public").Name = "static"
+    downloadHandler := handler.DownloadFileHandler{}
+    app.GET("/download/:fileName", middleware.DeleteAfterDownload(downloadHandler.DownloadFile)).Name = "download-csv"
 
-	downloadHandler := handler.DownloadFileHandler{}
-	app.GET("/download/:fileName", middleware.DeleteAfterDownload(downloadHandler.DownloadFile)).Name = "download-csv"
+	app.Static("/static", "./public").Name = "static"
 
 	app.Start(":8080")
 }

@@ -16,5 +16,5 @@ function handleShowEvent() {
  */
 function handleDownloadFile(event) {
     console.log(event.detail.value);
-    window.open(`/download/${event.detail.value}`, '_blank');
+    window.open(`/download/${event.detail.value}`);
 }

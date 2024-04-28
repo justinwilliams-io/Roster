@@ -8,3 +8,8 @@ build:
 	@templ generate
 	@npm run build
 	@go build cmd/main.go
+
+deploy:
+	@templ generate
+	@npm run build
+	@fly deploy
