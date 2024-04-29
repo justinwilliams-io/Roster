@@ -1,4 +1,5 @@
 /node_modules
 /tmp
+/public
 *templ.go
 package-lock.json

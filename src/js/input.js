@@ -1,5 +1,6 @@
-export default setup() {
+export default (function () {
     document.body.addEventListener('showRoster', handleShowEvent)
+    document.body.addEventListener('downloadCsv', handleDownloadFile)
 
     /* Shows the roster after the first player is added.
      * @returns { void } 
@@ -10,4 +11,11 @@ export default setup() {
             node.classList.remove('hidden');
         }
     };
-};
+
+    /* Open a new tab/window to download the generated CSV file
+     * @returns { void }
+     */
+    function handleDownloadFile(event) {
+        window.open(`/download/${event.detail.value}`);
+    }
+})();
