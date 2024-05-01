@@ -1,17 +1,13 @@
 package handler
 
 import (
-	"encoding/csv"
 	"encoding/json"
-	"log"
-	"os"
 	"rosterize/model"
 	"rosterize/util"
 	"rosterize/view/roster"
 	"strconv"
 	"time"
 
-	"github.com/dnlo/struct2csv"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
@@ -29,9 +25,7 @@ func (h GetTeamCsvHandler) GetCsv(c echo.Context) error {
 
 	team := mapTeam(form)
 
-	id := uuid.New()
-
-	fileName := createfile(id, team)
+	fileName := team.CreateCsv(uuid.New())
 
 	data := struct {
 		DownloadCsv string `json:"downloadCsv"`
@@ -72,33 +66,4 @@ func mapTeam(formData map[string][]string) model.Team {
 	team.Roster = players
 
 	return team
-}
-
-func createfile(id uuid.UUID, team model.Team) string {
-	fileName := team.Name + "-" + id.String() + ".csv"
-
-	_, err := os.Stat("./files")
-	if os.IsNotExist(err) {
-		os.MkdirAll("./files", os.ModePerm)
-	}
-
-	file, err := os.Create("./files/" + fileName)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer file.Close()
-
-	writer := csv.NewWriter(file)
-	defer writer.Flush()
-
-	encoder := struct2csv.New()
-	rows, err := encoder.Marshal(team.Roster)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	writer.WriteAll(rows)
-
-	return fileName
 }

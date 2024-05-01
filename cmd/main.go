@@ -5,10 +5,16 @@ import (
 	"rosterize/middleware"
 
 	"github.com/labstack/echo/v4"
+	echoMiddleware "github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
 	app := echo.New()
+
+	app.Use(
+		echoMiddleware.Recover(),
+        echoMiddleware.Gzip(),
+	)
 
 	homeHandler := handler.HomeHandler{}
 	app.GET("/", homeHandler.HandlerHomeShow).Name = "home"
@@ -25,8 +31,8 @@ func main() {
 	createTeamHandler := handler.CreateTeamHandler{}
 	app.POST("/submit-team-name", createTeamHandler.CreateTeam).Name = "create-team"
 
-    downloadHandler := handler.DownloadFileHandler{}
-    app.GET("/download/:fileName", middleware.DeleteAfterDownload(downloadHandler.DownloadFile)).Name = "download-csv"
+	downloadHandler := handler.DownloadFileHandler{}
+	app.GET("/download/:fileName", middleware.DeleteAfterDownload(downloadHandler.DownloadFile)).Name = "download-csv"
 
 	app.Static("/static", "./public").Name = "static"
 
