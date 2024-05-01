@@ -14,7 +14,8 @@ type Team struct {
 	Roster []Player
 }
 
-func (t *Team) CreateCsv(id uuid.UUID) string {
+func (t *Team) CreateCsv() string {
+    id := uuid.New()
 	fileName := t.Name + "-" + id.String() + ".csv"
 
 	_, err := os.Stat("./files")

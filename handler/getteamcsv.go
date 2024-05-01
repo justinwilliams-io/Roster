@@ -25,7 +25,7 @@ func (h GetTeamCsvHandler) GetCsv(c echo.Context) error {
 
 	team := mapTeam(form)
 
-	fileName := team.CreateCsv(uuid.New())
+	fileName := team.CreateCsv()
 
 	data := struct {
 		DownloadCsv string `json:"downloadCsv"`
