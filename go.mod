@@ -3,7 +3,7 @@ module rosterize
 go 1.22.2
 
 require (
-	github.com/a-h/templ v0.2.663
+	github.com/a-h/templ v0.2.680
 	github.com/dnlo/struct2csv v0.0.0-20190928115744-2f584471b24e
 	github.com/google/uuid v1.6.0
 	github.com/labstack/echo/v4 v4.12.0
