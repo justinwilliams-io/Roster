@@ -3,7 +3,7 @@ export default (function () {
     document.body.addEventListener('downloadCsv', handleDownloadFile)
 
     /* Shows the roster after the first player is added.
-     * @returns { void } 
+     * @returns { void }
      */
     function handleShowEvent() {
         var node = document.querySelector('.roster-table');

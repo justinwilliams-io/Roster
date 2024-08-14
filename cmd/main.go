@@ -19,6 +19,9 @@ func main() {
 	homeHandler := handler.HomeHandler{}
 	app.GET("/", homeHandler.HandlerHomeShow).Name = "home"
 
+	emptyHandler := handler.EmptyHandler{}
+	app.GET("/empty", emptyHandler.GetEmpty).Name = "empty"
+
 	rosterHandler := handler.RosterHandler{}
 	app.GET("/roster", rosterHandler.GetRoster).Name = "roster"
 

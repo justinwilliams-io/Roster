@@ -1,8 +1,8 @@
 package model
 
 type Player struct {
-	FirstName    string
-	LastName     string
-	JerseyNumber int
-	JerseySize   string
+	NameOnShirt  string
+	PlayerNumber int
+	ItemType     string
+	Size         string
 }

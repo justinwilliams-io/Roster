@@ -8,16 +8,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
 
 type GetTeamCsvHandler struct{}
-
-type DownloadJsonData struct {
-	Id       uuid.UUID
-	TeamName string
-}
 
 func (h GetTeamCsvHandler) GetCsv(c echo.Context) error {
 	c.Request().ParseForm()
@@ -52,14 +46,17 @@ func mapTeam(formData map[string][]string) model.Team {
 
 	team.Name = formData["team_name"][0]
 
-	for i, firstName := range formData["first_name[]"] {
-		jerseyNumber, _ := strconv.Atoi(formData["jersey_number[]"][i])
+	for i, firstName := range formData["name_on_shirt[]"] {
+		playerNumber, err := strconv.Atoi(formData["player_number[]"][i])
+		if err != nil {
+			playerNumber = 0
+		}
 
 		players = append(players, model.Player{
-			FirstName:    string(firstName),
-			LastName:     formData["last_name[]"][i],
-			JerseySize:   formData["jersey_size[]"][i],
-			JerseyNumber: jerseyNumber,
+			NameOnShirt:  string(firstName),
+			ItemType:     formData["item_type[]"][i],
+			Size:         formData["size[]"][i],
+			PlayerNumber: playerNumber,
 		})
 	}
 

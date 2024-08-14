@@ -11,19 +11,19 @@ import (
 type NewPlayerHandler struct{}
 
 func (h NewPlayerHandler) GetNewPlayer(c echo.Context) error {
-	jerseyNumber, err := strconv.Atoi(c.Request().FormValue("jersey_number"))
+	playerNumber, err := strconv.Atoi(c.Request().FormValue("player_number"))
 	if err != nil {
-		jerseyNumber = 0
+		playerNumber = 0
 	}
 
 	player := model.Player{
-		FirstName:    c.Request().FormValue("first_name"),
-		LastName:     c.Request().FormValue("last_name"),
-		JerseyNumber: jerseyNumber,
-		JerseySize:   c.Request().FormValue("jersey_size"),
+		NameOnShirt:  c.Request().FormValue("name_on_shirt"),
+		PlayerNumber: playerNumber,
+		ItemType:     c.Request().FormValue("item_type"),
+		Size:         c.Request().FormValue("size"),
 	}
-    
-    c.Response().Header().Add("HX-Trigger-After-Swap", "showRoster")
+
+	c.Response().Header().Add("HX-Trigger-After-Swap", "showRoster")
 
 	return render(c, roster.ShowPlayer(player))
 }

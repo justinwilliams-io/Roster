@@ -10,11 +10,11 @@ import (
 type DownloadFileHandler struct{}
 
 func (h DownloadFileHandler) DownloadFile(c echo.Context) error {
-    fileName := c.Param("fileName")
-    _, err :=os.Open("./files/" + fileName)
-    if err != nil {
-        c.Response().Status = http.StatusNotFound
-    }
+	fileName := c.Param("fileName")
+	_, err := os.Open("./files/" + fileName)
+	if err != nil {
+		c.Response().Status = http.StatusNotFound
+	}
 
-    return c.Attachment("./files/" + fileName, fileName)
+	return c.Attachment("./files/"+fileName, fileName)
 }
