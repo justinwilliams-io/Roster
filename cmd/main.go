@@ -16,14 +16,11 @@ func main() {
         echoMiddleware.Gzip(),
 	)
 
-	homeHandler := handler.HomeHandler{}
-	app.GET("/", homeHandler.HandlerHomeShow).Name = "home"
+    rosterHandler := handler.RosterHandler{}
+	app.GET("/", rosterHandler.GetRoster).Name = "home"
 
 	emptyHandler := handler.EmptyHandler{}
 	app.GET("/empty", emptyHandler.GetEmpty).Name = "empty"
-
-	rosterHandler := handler.RosterHandler{}
-	app.GET("/roster", rosterHandler.GetRoster).Name = "roster"
 
 	newMemberHandler := handler.NewPlayerHandler{}
 	app.POST("/add-player", newMemberHandler.GetNewPlayer).Name = "add-player"
